@@ -1,5 +1,28 @@
+name: Python-Workflow
 
+on:
+  workflow_dispatch:
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-
-  
+        # Step 2: Set up Python
+      - name: Setup Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: 3.13.5
+          cache: 'pip'
+      # Step 3: Install Dependencies
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        # Step 4: Run Tests
+      - name: Run Tests
+        run: |
+          python -m unittest discover -s tests -p "*.py"
